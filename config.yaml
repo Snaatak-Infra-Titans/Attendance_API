@@ -1,12 +1,12 @@
 ---
 postgres:
   database: attendance_db
-  host: 127.0.0.1
+  host: postgress.saransh.otms.internal
   port: 5432
   user: postgres
   password: password
 
 redis:
-  host: 127.0.0.1
+  host: redis.otms.internal
   port: 6379
   password: ""
