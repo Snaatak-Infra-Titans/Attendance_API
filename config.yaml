@@ -1,12 +1,11 @@
----
 postgres:
-  database: attendance_db
-  host: postgress.saransh.otms.internal
-  port: 5432
-  user: postgres
-  password: password
+  database: ${POSTGRES_DB:attendance_db}
+  host: ${POSTGRES_HOST:localhost}
+  port: ${POSTGRES_PORT:5432}
+  user: ${POSTGRES_USER:postgres}
+  password: ${POSTGRES_PASSWORD:password}
 
 redis:
-  host: redis.otms.internal
-  port: 6379
-  password: ""
+  host: ${REDIS_HOST:localhost}
+  port: ${REDIS_PORT:6379}
+  password: ${REDIS_PASSWORD:}

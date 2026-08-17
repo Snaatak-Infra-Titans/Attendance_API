@@ -24,15 +24,12 @@ class CorePostgresClient:
 
     def __init__(self):
 
-        with open(CONFIG_FILE, 'r', encoding="utf-8") as config_file:
-            yaml_values = yaml.load(config_file, Loader=yaml.FullLoader)
-
         self.db_config = {
-            "database": yaml_values['postgres']['database'],
-            "host": yaml_values['postgres']['host'],
-            "user": yaml_values['postgres']['user'],
-            "password": yaml_values['postgres']['password'],
-            "port": yaml_values['postgres']['port']
+            "database": os.getenv("POSTGRES_DB", "attendance_db"),
+            "host": os.getenv("POSTGRES_HOST", "localhost"),
+            "user": os.getenv("POSTGRES_USER", "postgres"),
+            "password": os.getenv("POSTGRES_PASSWORD", "password"),
+            "port": int(os.getenv("POSTGRES_PORT", "5432"))
         }
 
         self.client = None

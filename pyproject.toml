@@ -1,42 +1,50 @@
 [tool.poetry]
 name = "attendance-api"
 version = "0.1.0"
-description = "A Python-based microservice for handling attendance records"
+description = "A Python based microservice for handling attendance records"
 authors = ["Opstree Solutions"]
 license = "Apache"
 readme = "README.md"
-packages = [{ include = "attendance_api" }]
+
+package-mode = false
 
 [tool.poetry.dependencies]
-
 python = "^3.11"
+
 Flask = "^2.3.2"
-psycopg2 = "^2.9.6"
 peewee = "^3.16.2"
-voluptuous = "^0.13.1"
+psycopg2-binary = "^2.9.12"
 redis = "^4.6.0"
+
+voluptuous = "^0.13.1"
+
 json-logging-py = "^0.2"
 jsonformatter = "^0.3.2"
 python-json-logger = "^2.0.7"
+
 flask-caching = "^2.0.2"
 prometheus-flask-exporter = "^0.22.4"
 flasgger = "0.9.7b2"
+
 gunicorn = "^25.3.0"
 pyyaml = "^6.0.2"
+opentelemetry-api = "^1.44.0"
+opentelemetry-sdk = "^1.44.0"
+opentelemetry-exporter-otlp = "^1.44.0"
+opentelemetry-instrumentation-flask = "^0.65b0"
+opentelemetry-instrumentation-requests = "^0.65b0"
+opentelemetry-instrumentation-psycopg2 = "^0.65b0"
 
 [tool.poetry.group.dev.dependencies]
-
 pytest = "^7.4.0"
 pytest-cov = "^4.1.0"
 pytest-mock = "^3.11.1"
 
 [build-system]
-
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.coverage.run]
-
 omit = [
     "app.py"
 ]
