@@ -16,7 +16,7 @@ def init_tracing():
     provider = TracerProvider(resource=resource)
 
     exporter = OTLPSpanExporter(
-        endpoint="http://otel-collector:4318/v1/traces",
+        endpoint="http://otms.monitoring.internal:4318/v1/traces",
     )
 
     provider.add_span_processor(BatchSpanProcessor(exporter))
