@@ -87,3 +87,31 @@ gunicorn app:app --log-config log.conf -b 0.0.0.0:8080
 ## Contact Information
 
 [Opstree Opensource](mailto:opensource@opstree.com)
+
+
+## Complete runtime dependencies
+
+`requirements.txt` is generated from the locked Poetry main/runtime dependencies.
+It includes Flask, Gunicorn, Flasgger, PostgreSQL, Redis, Prometheus and the
+complete OpenTelemetry 3-signal stack.
+
+For a fresh Python 3.11 environment:
+
+```bash
+./install_dependencies.sh
+```
+
+## OpenTelemetry telemetry
+
+The API exports all three OpenTelemetry signals directly to the central OTLP endpoint.
+
+Set `OTEL_EXPORTER_OTLP_ENDPOINT` to the OTLP base URL, for example:
+
+`http://otms.monitoring.internal:4318`
+
+The application exports:
+- traces to `/v1/traces`
+- metrics to `/v1/metrics`
+- logs to `/v1/logs`
+
+Existing JSON stdout/journald logging is retained while the same Python log records are also exported through OTLP.

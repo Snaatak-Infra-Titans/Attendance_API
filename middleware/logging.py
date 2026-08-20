@@ -4,6 +4,8 @@ import time
 from flask import request
 from opentelemetry import trace
 
+from telemetry.telemetry import get_http_metrics
+
 logger = logging.getLogger("attendance")
 
 
@@ -25,6 +27,18 @@ def register_logging(app):
         if span_context.is_valid:
             trace_id = format(span_context.trace_id, "032x")
             span_id = format(span_context.span_id, "016x")
+
+        http_requests, http_request_duration = get_http_metrics()
+        attributes = {
+            "http.request.method": request.method,
+            "http.response.status_code": response.status_code,
+            "url.path": request.path,
+        }
+
+        if http_requests is not None:
+            http_requests.add(1, attributes)
+        if http_request_duration is not None:
+            http_request_duration.record(latency, attributes)
 
         logger.info(
             "HTTP REQUEST STATUS",

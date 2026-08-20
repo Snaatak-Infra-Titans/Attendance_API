@@ -12,9 +12,9 @@ from flask import Flask, json
 # create PostgreSQL connections.
 # ==================================================
 
-from telemetry.telemetry import init_tracing
+from telemetry.telemetry import init_telemetry
 
-init_tracing()
+init_telemetry()
 
 # ==================================================
 # Application imports
