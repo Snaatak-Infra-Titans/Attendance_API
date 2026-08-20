@@ -1,0 +1,49 @@
+# /etc/systemd/system/attendance-api.service
+[Unit]
+Description=Attendance API
+Documentation=https://github.com/Snaatak-Infra-Titans/Attendance_API
+Wants=network-online.target
+After=network-online.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+
+User=ubuntu
+Group=ubuntu
+
+WorkingDirectory=/home/ubuntu/Attendance_API
+
+Environment="PATH=/home/ubuntu/Attendance_API/.venv/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin"
+Environment="CONFIG_FILE=/home/ubuntu/Attendance_API/config.yaml"
+
+# PostgreSQL
+Environment="POSTGRES_HOST=otms.postgresql.internal"
+Environment="POSTGRES_PORT=5432"
+Environment="POSTGRES_DB=attendance_db"
+Environment="POSTGRES_USER=postgres"
+Environment="POSTGRES_PASSWORD=password"
+
+# Redis
+Environment="REDIS_HOST=otms.redis.internal"
+Environment="REDIS_PORT=6379"
+Environment="REDIS_PASSWORD="
+
+Environment="OTEL_EXPORTER_OTLP_ENDPOINT=http://otms.monitoring.internal:4318"
+ExecStart=/home/ubuntu/Attendance_API/.venv/bin/gunicorn app:app --log-config /home/ubuntu/Attendance_API/log.conf --bind 0.0.0.0:8081
+
+Restart=always
+RestartSec=15
+
+TimeoutStartSec=60
+TimeoutStopSec=30
+
+KillSignal=SIGTERM
+
+StandardOutput=journal
+StandardError=journal
+
+SyslogIdentifier=attendance-api
+
+[Install]
+WantedBy=multi-user.target
